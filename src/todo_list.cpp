@@ -1,6 +1,7 @@
 #include "todo_list.hpp"
 #include "task.hpp"
 #include <iostream>
+#include <string>
 
 void TodoList::add(std::string task_description) {
     Task* new_task = new Task();
@@ -18,30 +19,35 @@ void TodoList::complete(std::string task_description) {
     }
 }
 
-void TodoList::all() {
+std::string TodoList::all() {
     if (task_list.size() == 0) {
         std::cout << "No tasks to display" << std::endl;
-        return;
+        return "No tasks to display";
     }
     for (Task* task : task_list) {
-        std::cout << task->description << std::endl;
+        return task->description + "\n";
     }
+    return "No tasks to display";
 }
 
-void TodoList::complete() {
+std::string TodoList::complete() {
     for (Task* task : task_list) {
         if (task->is_complete) {
             std::cout << task->description << std::endl;
+            return task->description;
         }
     }
+    return "";
 }
 
-void TodoList::incomplete() {
+std::string TodoList::incomplete() {
     for (Task* task : task_list) {
         if (!task->is_complete) {
             std::cout << task->description << std::endl;
+            return task->description;
         }
     }
+    return "";
 }
 
 void TodoList::clear() {

@@ -5,38 +5,43 @@
 
 #include "../src/todo_list.hpp"
 
-TEST_CASE( "TodoList can be instantiated" ) {
+TEST_CASE( "TodoList functionality" ) {
+    // Can be instantiated
     TodoList list;
     REQUIRE( true );
-}
-
-TEST_CASE( "Can add tasks to the list" ) {
-    TodoList list;
+    
+    // Test all() on empty list
+    REQUIRE( list.all() == "No tasks to display" );
+    
+    // Can add tasks to the list
     list.add("Buy milk");
     list.add("Buy eggs");
-    REQUIRE( true );
-}
-
-TEST_CASE( "Can complete a task" ) {
-    TodoList list;
-    list.add("Buy milk");
-    list.add("Buy eggs");
-    list.complete("Buy milk");
-    REQUIRE( true );
-}
-
-TEST_CASE( "Can clear all tasks" ) {
-    TodoList list;
-    list.add("Buy milk");
-    list.add("Buy eggs");
-    list.clear();
-    REQUIRE( true );
-}
-
-TEST_CASE( "Can handle completing non-existent task" ) {
-    TodoList list;
-    list.add("Buy milk");
+    
+    // Test all() returns first task
+    REQUIRE( list.all() == "Buy milk\n" );
+    
+    // Test complete() with no completed tasks
+    REQUIRE( list.complete() == "" );
+    
+    // Test incomplete() with incomplete tasks
+    REQUIRE( list.incomplete() == "Buy milk" );
+    
+    // Can complete a task
+    list.complete("Buy eggs");
+    
+    // Test complete() after completing a task
+    REQUIRE( list.complete() == "Buy eggs" );
+    
+    // Test incomplete() after completing a task
+    REQUIRE( list.incomplete() == "Buy milk" );
+    
+    // Can handle completing non-existent task
     list.complete("Non-existent task");
-    REQUIRE( true );
+    
+    // Can clear all tasks
+    list.clear();
+    
+    // Test all() on cleared list
+    REQUIRE( list.all() == "No tasks to display" );
 }
 

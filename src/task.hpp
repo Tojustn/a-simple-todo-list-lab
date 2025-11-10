@@ -1,5 +1,4 @@
-#ifndef TASK_HPP
-#define TASK_HPP
+#pragma once
 
 #include <string>
 
@@ -8,5 +7,4 @@ struct Task {
     bool is_complete;
 };
 
-#endif // TASK_HPP
 

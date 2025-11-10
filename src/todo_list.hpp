@@ -1,5 +1,4 @@
-#ifndef TODO_LIST_HPP
-#define TODO_LIST_HPP
+#pragma once
 
 #include <string>
 #include <vector>
@@ -12,9 +11,9 @@ private:
 public:
     void add(std::string task_description);
     void complete(std::string task_description);
-    void all();
-    void complete();
-    void incomplete();
+    std::string all();
+    std::string complete();
+    std::string incomplete();
     void clear();
     ~TodoList(){
         for (Task* task : task_list) {
@@ -25,5 +24,4 @@ public:
     };
 };
 
-#endif // TODO_LIST_HPP
 
