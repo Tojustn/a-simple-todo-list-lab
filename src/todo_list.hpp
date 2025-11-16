@@ -20,7 +20,6 @@ public:
             delete task;
         }
         task_list.clear();
-        delete this;
     };
 };
 
