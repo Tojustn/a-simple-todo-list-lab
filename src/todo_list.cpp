@@ -10,7 +10,7 @@ void TodoList::add(std::string task_description, std::vector<std::string> tags =
         return;
     }
     for(Task* task : task_list) {
-        if (task->description == task_description) {
+        if (task->description == task_description && task->is_complete == false) {
             std::cout << "Task already exists" << std::endl;
             return;
         }
