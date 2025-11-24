@@ -17,23 +17,23 @@ TEST_CASE( "TodoList functionality" ) {
     list.add("Buy milk");
     list.add("Buy eggs");
     
-    // Test all() returns first task
-    REQUIRE( list.all() == "Buy milk\n" );
+    // Test all() returns all tasks with header
+    REQUIRE( list.all() == "All Tasks:\nBuy milk\nBuy eggs\n" );
     
     // Test complete() with no completed tasks
-    REQUIRE( list.complete() == "" );
+    REQUIRE( list.complete() == "Completed Tasks:\n" );
     
     // Test incomplete() with incomplete tasks
-    REQUIRE( list.incomplete() == "Buy milk" );
+    REQUIRE( list.incomplete() == "Incomplete Tasks:\nBuy milk\nBuy eggs\n" );
     
     // Can complete a task
     list.complete("Buy eggs");
     
     // Test complete() after completing a task
-    REQUIRE( list.complete() == "Buy eggs" );
+    REQUIRE( list.complete() == "Completed Tasks:\nBuy eggs\n" );
     
     // Test incomplete() after completing a task
-    REQUIRE( list.incomplete() == "Buy milk" );
+    REQUIRE( list.incomplete() == "Incomplete Tasks:\nBuy milk\n" );
     
     // Can handle completing non-existent task
     list.complete("Non-existent task");
@@ -43,5 +43,37 @@ TEST_CASE( "TodoList functionality" ) {
     
     // Test all() on cleared list
     REQUIRE( list.all() == "No tasks to display" );
+}
+
+TEST_CASE( "TodoList tags functionality" ) {
+    TodoList list;
+    
+    // Can add tasks with tags
+    list.add("Buy bread", {"shopping", "important"});
+    list.add("Go to the grocery store", {"shopping", "important"});
+    list.add("Go to the bank", {"finance", "important"});
+    
+    // Test find_tags returns tasks with specific tag
+    REQUIRE( list.find_tags("shopping") == "Tasks with tag shopping:\nBuy bread\nGo to the grocery store\n" );
+    REQUIRE( list.find_tags("finance") == "Tasks with tag finance:\nGo to the bank\n" );
+    REQUIRE( list.find_tags("important") == "Tasks with tag important:\nBuy bread\nGo to the grocery store\nGo to the bank\n" );
+    REQUIRE( list.find_tags("nonexistent") == "Tasks with tag nonexistent:\n" );
+}
+
+TEST_CASE( "TodoList edge cases" ) {
+    TodoList list;
+    
+    // Test adding empty task description
+    list.add("");
+    REQUIRE( list.all() == "No tasks to display" );
+    
+    // Test adding duplicate task
+    list.add("Buy milk");
+    list.add("Buy milk");
+    REQUIRE( list.all() == "All Tasks:\nBuy milk\n" );
+    
+    // Test completing task that doesn't exist
+    list.complete("Non-existent task");
+    REQUIRE( list.complete() == "Completed Tasks:\n" );
 }
 

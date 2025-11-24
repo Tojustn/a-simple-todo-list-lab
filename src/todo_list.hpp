@@ -9,11 +9,14 @@ private:
     std::vector<Task*> task_list;
 
 public:
+    void add(std::string task_description, std::vector<std::string> tags);
     void add(std::string task_description);
     void complete(std::string task_description);
+    std::string find_tags(std::string tag);
     std::string all();
     std::string complete();
     std::string incomplete();
+
     void clear();
     ~TodoList(){
         for (Task* task : task_list) {
